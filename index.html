@@ -1,29 +1,131 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title> gendatshub</title>
-     <style>
-      #jdul {
-        font-size: 30px;
-      }
-     </style>
-  </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GendatsHub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f3f3f3;
+        }
 
-  <body>
-    <p id="jdul">welcome to gendatshub</p>
-    
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            background: white;
+        }
 
+        .chat-header {
+            background-color: #00fe9c;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
 
+        .chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ddd;
+        }
 
-  </body>
+        .chat-message {
+            margin-bottom: 10px;
+        }
 
+        .chat-message.user {
+            text-align: right;
+        }
 
+        .chat-message .text {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 16px;
+            background-color: #007bff;
+            color: white;
+        }
 
+        .chat-message.user .text {
+            background-color: #28a745;
+        }
 
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
 
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
 
+        .chat-input button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">GendatsHub</div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
 
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
 
+        function sendMessage() {
+            const message = chatInput.value.trim();
 
+            if (message) {
+                const userMessage = document.createElement('div');
+                userMessage.className = 'chat-message user';
+                userMessage.innerHTML = `<div class="text">${message}</div>`;
+                chatMessages.appendChild(userMessage);
+
+                // Simulate a response from "server"
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'chat-message';
+                    botMessage.innerHTML = `<div class="text">Echo: ${message}</div>`;
+                    chatMessages.appendChild(botMessage);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 500);
+
+                chatInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
 </html>
